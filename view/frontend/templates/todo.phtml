@@ -1,0 +1,38 @@
+
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var Webjump\Todo\ViewModel\Todo $todoVm */
+
+$todoVm = $block->getData('todo_vm');
+?>
+
+
+<div class="blog-post-list">
+    <?php foreach ($todoVm->getList() as $todo): ?>
+    <p><?= $todo->getData('id'), ' - ', $todo->getData('title') ?>
+        <?php if($todo->getData('is_done')): ?>
+            <input type="checkbox" id="isDone" name="isDone" checked>
+        <?php else: ?>
+            <input type="checkbox" id="isDone" name="isDone">
+        <?php endif; ?>
+    </p>
+    <?php endforeach ?>
+    <div class="todo_component" data-bind="scope: 'todo_component'"  >
+        <input type="text" data-bind='textInput: message' />
+        <p data-bind="text: message"></p>
+    </div>
+</div>
+
+
+<script type="text/x-magento-init">
+    {
+        ".todo_component": {
+            "Magento_Ui/js/core/app": <?= $block->getJsLayout() ?>
+        }
+    }
+</script>

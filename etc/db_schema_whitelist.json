@@ -1,0 +1,13 @@
+{
+    "webjump_todos": {
+        "column": {
+            "id": true,
+            "title": true,
+            "content": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
