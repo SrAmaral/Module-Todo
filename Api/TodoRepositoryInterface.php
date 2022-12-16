@@ -21,6 +21,11 @@ interface TodoRepositoryInterface
     public function getById(int $id): TodoInterface;
 
     /**
+     * @return TodoInterface[] | null
+     */
+    public function getList();
+
+    /**
      * @param TodoInterface $todo
      * @return TodoInterface
      * @throws LocalizedException

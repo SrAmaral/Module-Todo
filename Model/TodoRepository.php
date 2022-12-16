@@ -7,6 +7,7 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Webjump\Todo\Api\Data\TodoInterface;
 use Webjump\Todo\Model\ResourceModel\Todo as TodoResourceModel;
+use Webjump\Todo\Model\ResourceModel\Todo\Collection;
 use Webjump\Todo\Api\TodoRepositoryInterface;
 
 class TodoRepository implements TodoRepositoryInterface
@@ -14,7 +15,8 @@ class TodoRepository implements TodoRepositoryInterface
 
     public function __construct(
         private TodoFactory $todoFactory,
-        private TodoResourceModel $todoResourceModel
+        private TodoResourceModel $todoResourceModel,
+        private Collection $collection
     ) {}
 
     /**
@@ -32,6 +34,16 @@ class TodoRepository implements TodoRepositoryInterface
         }
 
         return $todo;
+    }
+
+    /**
+     * @return TodoInterface[] | null
+     */
+    public function getList()
+    {
+        $todos = $this->collection->getItems();
+
+        return $todos;
     }
 
     /**

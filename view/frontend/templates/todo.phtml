@@ -9,22 +9,16 @@
 /** @var Webjump\Todo\ViewModel\Todo $todoVm */
 
 $todoVm = $block->getData('todo_vm');
+
+
+/*print_r(json_encode($todoVm->getListData()));
+die;*/
 ?>
 
 
-<div class="blog-post-list">
-    <?php foreach ($todoVm->getList() as $todo): ?>
-    <p><?= $todo->getData('id'), ' - ', $todo->getData('title') ?>
-        <?php if($todo->getData('is_done')): ?>
-            <input type="checkbox" id="isDone" name="isDone" checked>
-        <?php else: ?>
-            <input type="checkbox" id="isDone" name="isDone">
-        <?php endif; ?>
-    </p>
-    <?php endforeach ?>
+<div class="todo_list">
     <div class="todo_component" data-bind="scope: 'todo_component'"  >
-        <input type="text" data-bind='textInput: message' />
-        <p data-bind="text: message"></p>
+        <!-- ko template: getTemplate() --> <!-- /ko -->
     </div>
 </div>
 
@@ -32,7 +26,13 @@ $todoVm = $block->getData('todo_vm');
 <script type="text/x-magento-init">
     {
         ".todo_component": {
-            "Magento_Ui/js/core/app": <?= $block->getJsLayout() ?>
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "todo_component": {
+                        "component": "Webjump_Todo/js/todo_component"
+                    }
+                }
+            }
         }
     }
 </script>

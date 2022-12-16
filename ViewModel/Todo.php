@@ -19,6 +19,10 @@ class Todo implements ArgumentInterface
         return $this->collection->getItems();
     }
 
+    public function getListData(): array {
+        return $this->collection->getData();
+    }
+
     public function getCount(): int {
         return $this->collection->count();
     }

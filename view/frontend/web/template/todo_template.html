@@ -1,0 +1,9 @@
+<!-- ko foreach: todoList -->
+        <span data-bind="text: title"></span>
+        <input type="checkbox" data-bind="checked: is_done" />
+        <button data-bind="click: $parent.deleteTodo">Remove Todo</button>
+        <br/>
+<!--/ko-->
+<button data-bind="click: addTodo">Add Todo</button>
+
+

@@ -6,13 +6,6 @@
                 <block name="blog.list" template="Webjump_Todo::todo.phtml">
                     <arguments>
                         <argument name="todo_vm" xsi:type="object">Webjump\Todo\ViewModel\Todo</argument>
-                        <argument name="jsLayout" xsi:type="array">
-                            <item name="components" xsi:type="array">
-                                <item name="todo_component" xsi:type="array">
-                                    <item name="component" xsi:type="string">Webjump_Todo/js/todo_component</item>
-                                </item>
-                            </item>
-                        </argument>
                     </arguments>
                 </block>
         </referenceContainer>

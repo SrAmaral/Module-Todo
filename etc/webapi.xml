@@ -7,6 +7,12 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
+    <route method="GET" url="/V1/todos">
+        <service class="Webjump\Todo\Api\TodoRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
     <route method="POST" url="/V1/todo">
         <service class="Webjump\Todo\Api\TodoRepositoryInterface" method="save"/>
         <resources>
@@ -15,6 +21,12 @@
     </route>
     <route method="PUT" url="/V1/todo/:id">
         <service class="Webjump\Todo\Api\TodoRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route method="DELETE" url="/V1/todo/:id">
+        <service class="Webjump\Todo\Api\TodoRepositoryInterface" method="deleteById"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
