@@ -17,7 +17,9 @@ define([
         defaults: {
             template: 'Webjump_Todo/todo_template',
             message: ko.observable('ola por defaults'),
-            todoList: ko.observableArray([])
+            todoList: ko.observableArray([]),
+            newTodoText: ko.observable(''),
+
 
         },
 
@@ -34,25 +36,28 @@ define([
             storage.get('rest/V1/todos').done(response => {
                 self.todoList.removeAll()
                 response.map(todo => {
-                    self.todoList.push(todo)
+                    self.todoList.push({...todo, isEdit: ko.observable(false)})
                 })
             })
         },
 
 
         addTodo: function (){
-            storage.post('rest/V1/todo',
-                JSON.stringify({
-                    "todo": {
-                        "title": "teste teste",
-                        "is_done": false
-                    }
+            if( self.newTodoText().replaceAll(' ', '') != "")
+            {
+                storage.post('rest/V1/todo',
+                    JSON.stringify({
+                        "todo": {
+                            "title": self.newTodoText(),
+                            "is_done": false
+                        }
+                    })
+                ).done(() => {
+                    self.handleTodoListUpdate()
+                }).fail(err => {
+                    console.log(err)
                 })
-            ).done(() => {
-                self.handleTodoListUpdate()
-            }).fail(err => {
-                console.log(err)
-            })
+            }
 
         },
 
@@ -65,6 +70,27 @@ define([
             })
 
 
+        },
+
+        handleTodoIsCheckUpdate: function (todo){
+            console
+            storage.put(`rest/V1/todo/${todo.id}`,
+                JSON.stringify({
+                    "todo": {
+                        "title": todo.title,
+                        "is_done": todo.is_done
+                    }
+                })
+            ).done(() => {
+                self.handleTodoListUpdate()
+            }).fail(err => {
+                console.log(err)
+            })
+        },
+
+
+        handleTodoEdit: function (index){
+           self.todoList()[index].isEdit(!self.todoList()[index].isEdit())
         }
     });
 });

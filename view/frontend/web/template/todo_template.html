@@ -1,9 +1,18 @@
 <!-- ko foreach: todoList -->
-        <span data-bind="text: title"></span>
-        <input type="checkbox" data-bind="checked: is_done" />
+        <!-- ko if: isEdit() -->
+            <input type="text" data-bind="textInput: title" />
+        <!-- /ko -->
+        <!-- ko if: !isEdit() -->
+         <span data-bind="text: title"></span>
+        <!-- /ko -->
+        <input type="checkbox" data-bind="checked: is_done, click: $parent.handleTodoIsCheckUpdate" />
         <button data-bind="click: $parent.deleteTodo">Remove Todo</button>
+        <button data-bind="click: $parent.handleTodoEdit.bind(this, $index())">
+            <p data-bind="text: isEdit() ? 'Salvar' : 'Editar'"></p>
+        </button>
         <br/>
 <!--/ko-->
+<input type="text" data-bind="textInput: newTodoText" />
 <button data-bind="click: addTodo">Add Todo</button>
 
 
