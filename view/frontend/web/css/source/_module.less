@@ -1,0 +1,74 @@
+& when (@media-common = true) {
+
+    .todo_element {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 10px;
+
+        .todo_title {
+            width: 180px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .todo_title_edit {
+            width: 180px;
+        }
+
+        .remove_btn {
+                display: inline-block;
+                background-image: url("@{baseDir}Webjump_Todo/images/trash.svg");
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 16px;
+                height: 16px;
+        }
+
+        .edit_icon {
+            display: inline-block;
+            background-image: url("@{baseDir}Webjump_Todo/images/edit.svg");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 16px;
+            height: 16px;
+        }
+        .save_icon {
+            display: inline-block;
+            background-image: url("@{baseDir}Webjump_Todo/images/save.svg");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    .todo_add {
+        display: flex;
+        flex-direction: column;
+        .add_input {
+            width: 180px;
+            margin-right: 15px;
+        }
+
+        .add_button {
+            display: inline-block;
+            background-image: url("@{baseDir}Webjump_Todo/images/plus.svg");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 16px;
+            height: 16px;
+
+        }
+    }
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}

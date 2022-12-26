@@ -1,18 +1,26 @@
 <!-- ko foreach: todoList -->
+    <div class="todo_element">
         <!-- ko if: isEdit() -->
-            <input type="text" data-bind="textInput: title" />
+            <input class="todo_title_edit" type="text" data-bind="textInput: title" />
         <!-- /ko -->
         <!-- ko if: !isEdit() -->
-         <span data-bind="text: title"></span>
+         <span class="todo_title" data-bind="text: title"></span>
         <!-- /ko -->
-        <input type="checkbox" data-bind="checked: is_done, click: $parent.handleTodoIsCheckUpdate" />
-        <button data-bind="click: $parent.deleteTodo">Remove Todo</button>
-        <button data-bind="click: $parent.handleTodoEdit.bind(this, $index())">
-            <p data-bind="text: isEdit() ? 'Salvar' : 'Editar'"></p>
-        </button>
-        <br/>
-<!--/ko-->
-<input type="text" data-bind="textInput: newTodoText" />
-<button data-bind="click: addTodo">Add Todo</button>
+        <input class="todo_is_done" type="checkbox" data-bind="checked: is_done, click: $parent.handleTodoIsCheckUpdate" />
+        <a href="/" class="remove_btn" data-bind="click: $parent.deleteTodo">
 
+        </a>
+        <a href="/" class="edit_btn" data-bind="click: $parent.handleTodoEdit.bind(this, $index())">
+            <span  class="label_btn" data-bind="css: {edit_icon: !isEdit(), save_icon: isEdit()}"></span>
+        </a>
+    </div>
+<!--/ko-->
+
+<div class="todo_add">
+    <label class="add_label" for="addTodo">Add Todo</label>
+    <div>
+        <input class="add_input" id="addTodo" type="text" data-bind="textInput: newTodoText" placeholder="Exemplo: Fazer compras" />
+        <a href="/" class="add_button" data-bind="click: addTodo"></a>
+    </div>
+</div>
 

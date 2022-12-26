@@ -73,7 +73,6 @@ define([
         },
 
         handleTodoIsCheckUpdate: function (todo){
-            console
             storage.put(`rest/V1/todo/${todo.id}`,
                 JSON.stringify({
                     "todo": {
@@ -89,8 +88,11 @@ define([
         },
 
 
-        handleTodoEdit: function (index){
-           self.todoList()[index].isEdit(!self.todoList()[index].isEdit())
-        }
+        handleTodoEdit: function (index,todo){
+            if(todo.isEdit()){
+                self.handleTodoIsCheckUpdate(todo)
+            }
+            self.todoList()[index].isEdit(!self.todoList()[index].isEdit())
+        },
     });
 });
