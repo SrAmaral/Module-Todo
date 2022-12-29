@@ -1,69 +1,175 @@
 & when (@media-common = true) {
 
-    .todo_element {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        margin-bottom: 10px;
-
-        .todo_title {
-            width: 180px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+    .hover_animation(@_size: 1.2) {
+        cursor: pointer;
+        &:hover {
+            transform: scale(@_size);
+            transition: all .2s;
         }
+    }
 
-        .todo_title_edit {
-            width: 180px;
-        }
+    .page-title {
+        font-size: 42px;
+        font-weight: 700;
+    }
 
-        .remove_btn {
+    .todo_component{
+        width: fit-content;
+        .todo_element {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(51,51,51,0.2);
+            border-radius: 5px;
+            padding: 10px;
+            width: fit-content;
+            background: #ffffff;
+            box-shadow:  -5px 5px 10px #c6c6c6,
+                5px -5px 10px #ffffff;
+
+            .hover_animation(@_size: 1.05);
+
+            .todo_title {
+                width: 230px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 12px;
+                font-weight: 700;
+                cursor: pointer;
+            }
+
+            .todo_title_edit {
+                width: 230px;
+                border-radius: 5px;
+            }
+
+            .todo_is_done {
+                margin: 0;
+                margin-top: -3px;
+                .hover_animation();
+                width: 16px;
+                height: 16px;
+            }
+
+            .edit_btn {
+                width: 16px;
+                height: 16px;
+            }
+
+            .remove_btn {
+                    display: inline-block;
+                    background-image: url("@{baseDir}Webjump_Todo/images/trash.svg");
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    width: 16px;
+                    height: 16px;
+
+                .hover_animation()
+            }
+
+            .edit_icon {
                 display: inline-block;
-                background-image: url("@{baseDir}Webjump_Todo/images/trash.svg");
+                background-image: url("@{baseDir}Webjump_Todo/images/edit.svg");
                 background-size: contain;
                 background-position: center;
                 background-repeat: no-repeat;
                 width: 16px;
                 height: 16px;
+
+                .hover_animation()
+            }
+            .save_icon {
+                display: inline-block;
+                background-image: url("@{baseDir}Webjump_Todo/images/save.svg");
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 16px;
+                height: 16px;
+
+                .hover_animation()
+            }
         }
 
-        .edit_icon {
-            display: inline-block;
-            background-image: url("@{baseDir}Webjump_Todo/images/edit.svg");
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            width: 16px;
-            height: 16px;
-        }
-        .save_icon {
-            display: inline-block;
-            background-image: url("@{baseDir}Webjump_Todo/images/save.svg");
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            width: 16px;
-            height: 16px;
-        }
-    }
+        .pagination {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
 
-    .todo_add {
-        display: flex;
-        flex-direction: column;
-        .add_input {
-            width: 180px;
-            margin-right: 15px;
+            .previous_page {
+                display: inline-block;
+                background-image: url("@{baseDir}Webjump_Todo/images/previous.svg");
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 30px;
+                height: 30px;
+            }
+
+            .next_page {
+                display: inline-block;
+                background-image: url("@{baseDir}Webjump_Todo/images/next.svg");
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 30px;
+                height: 30px;
+            }
+
+            .disabled_pagination {
+                background: #b4b3b3;
+                border: none;
+            }
+            .action,.previous_page,.next_page {
+                .hover_animation()
+            }
         }
 
-        .add_button {
-            display: inline-block;
-            background-image: url("@{baseDir}Webjump_Todo/images/plus.svg");
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            width: 16px;
-            height: 16px;
+        .todo_add {
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
 
+            .add_label {
+                margin-bottom: 8px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .add_group {
+                display: flex;
+                align-items: center;
+            }
+
+            .add_input {
+                width: 258px;
+                margin-right: 15px;
+                border-radius: 5px;
+            }
+
+            .add_button {
+
+                display: flex;
+                align-items: center;
+
+                .add_icon {
+                    display: inline-block;
+                    background-image: url("@{baseDir}Webjump_Todo/images/plus.svg");
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    width: 15px;
+                    height: 15px;
+                    margin-left: 8px
+                }
+
+                .hover_animation()
+            }
         }
     }
 

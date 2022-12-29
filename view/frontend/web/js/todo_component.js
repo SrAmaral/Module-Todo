@@ -16,9 +16,11 @@ define([
 
         defaults: {
             template: 'Webjump_Todo/todo_template',
-            message: ko.observable('ola por defaults'),
             todoList: ko.observableArray([]),
+            todoPagination: ko.observableArray([]),
             newTodoText: ko.observable(''),
+            totalTodoShow: ko.observable(10),
+            currentPages: ko.observable(0)
 
 
         },
@@ -29,15 +31,29 @@ define([
             self = this
 
             self.handleTodoListUpdate()
+
+            this.todoListResultPagination = ko.computed(function () {
+                let totalTodos = self.currentPages()*self.totalTodoShow()
+                return self.todoList().slice(totalTodos, totalTodos + self.totalTodoShow())
+            }, this)
         },
 
         handleTodoListUpdate: function (){
-            this.todoList.removeAll()
+            $('.todo_component').trigger('processStart')
             storage.get('rest/V1/todos').done(response => {
                 self.todoList.removeAll()
+                let todoArray = []
                 response.map(todo => {
-                    self.todoList.push({...todo, isEdit: ko.observable(false)})
+                    todoArray.push({...todo, isEdit: ko.observable(false)})
                 })
+                self.todoList(todoArray)
+                self.todoPagination.removeAll()
+                for (let i = 0; i < response.length/self.totalTodoShow(); i++) {
+                    self.todoPagination.push(i+1)
+                }
+
+            }).always(() => {
+                $('.todo_component').trigger('processStop')
             })
         },
 
@@ -54,6 +70,7 @@ define([
                     })
                 ).done(() => {
                     self.handleTodoListUpdate()
+                    self.newTodoText('')
                 }).fail(err => {
                     console.log(err)
                 })
@@ -72,27 +89,52 @@ define([
 
         },
 
-        handleTodoIsCheckUpdate: function (todo){
-            storage.put(`rest/V1/todo/${todo.id}`,
-                JSON.stringify({
-                    "todo": {
-                        "title": todo.title,
-                        "is_done": todo.is_done
-                    }
+        handleTodoIsCheckUpdate: function (todo, event, noCheck= false){
+                storage.put(`rest/V1/todo/${todo.id}`,
+                    JSON.stringify({
+                        "todo": {
+                            "title": todo.title,
+                            "is_done": event.target.className === 'todo_is_done' ? todo.is_done : noCheck ? todo.is_done : !todo.is_done
+                        }
+                    })
+                ).done(() => {
+                    self.handleTodoListUpdate()
+                }).fail(err => {
+                    console.log(err)
                 })
-            ).done(() => {
-                self.handleTodoListUpdate()
-            }).fail(err => {
-                console.log(err)
-            })
         },
 
-
-        handleTodoEdit: function (index,todo){
+        handleTodoEdit: function (index,todo, event){
             if(todo.isEdit()){
-                self.handleTodoIsCheckUpdate(todo)
+                self.handleTodoIsCheckUpdate(todo, event, true)
             }
+
             self.todoList()[index].isEdit(!self.todoList()[index].isEdit())
         },
+
+        handlePagination: function (index){
+            self.handleTodoListUpdate()
+            self.currentPages(index-1)
+        },
+
+        disablePagination: function (index) {
+            return index !== self.currentPages()
+        },
+
+        nextPage: function () {
+            if(self.currentPages() !== 0) {
+                self.handleTodoListUpdate()
+                self.currentPages(self.currentPages() -1)
+            }
+        },
+
+        previousPage: function () {
+            if(self.todoPagination().length !== self.currentPages()+1) {
+                self.handleTodoListUpdate()
+                self.currentPages(self.currentPages() +1)
+            }
+        }
+
+
     });
 });

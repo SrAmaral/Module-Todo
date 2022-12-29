@@ -1,12 +1,13 @@
-<!-- ko foreach: todoList -->
+<!-- ko foreach: todoListResultPagination -->
     <div class="todo_element">
+        <input class="todo_is_done" type="checkbox" data-bind="checked: is_done, click: $parent.handleTodoIsCheckUpdate" />
         <!-- ko if: isEdit() -->
             <input class="todo_title_edit" type="text" data-bind="textInput: title" />
         <!-- /ko -->
         <!-- ko if: !isEdit() -->
-         <span class="todo_title" data-bind="text: title"></span>
+         <span class="todo_title" data-bind="text: title, click: $parent.handleTodoIsCheckUpdate"></span>
         <!-- /ko -->
-        <input class="todo_is_done" type="checkbox" data-bind="checked: is_done, click: $parent.handleTodoIsCheckUpdate" />
+
         <a href="/" class="remove_btn" data-bind="click: $parent.deleteTodo">
 
         </a>
@@ -16,11 +17,21 @@
     </div>
 <!--/ko-->
 
+<div class="pagination">
+    <div class="previous_page" data-bind="click: nextPage" ></div>
+    <!-- ko foreach: todoPagination -->
+        <a class="action primary" data-bind="text: $data, click: $parent.handlePagination, css: {disabled_pagination: $parent.disablePagination($index())}"></a>
+    <!--/ko-->
+    <div class="next_page" data-bind="click: previousPage"></div>
+</div>
 <div class="todo_add">
     <label class="add_label" for="addTodo">Add Todo</label>
-    <div>
-        <input class="add_input" id="addTodo" type="text" data-bind="textInput: newTodoText" placeholder="Exemplo: Fazer compras" />
-        <a href="/" class="add_button" data-bind="click: addTodo"></a>
+    <div class="add_group">
+        <input class="add_input" id="addTodo" type="text" data-bind="textInput: newTodoText" placeholder="Adicionar Todo" />
+        <button class="action primary add_button" data-bind="click: addTodo">
+            <span>Criar</span>
+            <div class="add_icon"></div>
+        </button>
     </div>
 </div>
 

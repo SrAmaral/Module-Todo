@@ -23,6 +23,13 @@ class ListAction implements HttpGetActionInterface
      */
     public function execute(): Page
     {
+        $resultPage = $this->getResultPageFactory()->create();
+        $resultPage->getConfig()->getTitle()->prepend(__('Todo List'));
         return $this->pageFactory->create();
+    }
+
+    public function getResultPageFactory()
+    {
+        return $this->pageFactory;
     }
 }
