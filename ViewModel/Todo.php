@@ -3,6 +3,7 @@
 namespace Webjump\Todo\ViewModel;
 
 use Webjump\Todo\Api\Data\TodoInterface;
+use Webjump\Todo\Api\TodoConfigProviderInterface;
 use Webjump\Todo\Api\TodoRepositoryInterface;
 use Webjump\Todo\Model\ResourceModel\Todo\Collection;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
@@ -12,6 +13,7 @@ class Todo implements ArgumentInterface
     public function __construct(
         private Collection $collection,
         private TodoRepositoryInterface $todoRepository,
+        private TodoConfigProviderInterface $todoConfigProvider
     )
     {}
 
@@ -29,5 +31,13 @@ class Todo implements ArgumentInterface
 
     public function getDetail(int $id): TodoInterface {
         return $this->todoRepository->getById($id);
+    }
+
+    public function getTotalDefaultTodo() {
+        return $this->todoConfigProvider->getTotalDefatultTodos();
+    }
+
+    public function getOptionTodos() {
+        return $this->todoConfigProvider->getOptionTodos();
     }
 }

@@ -10,9 +10,6 @@
 
 $todoVm = $block->getData('todo_vm');
 
-
-/*print_r(json_encode($todoVm->getListData()));
-die;*/
 ?>
 
 
@@ -29,7 +26,9 @@ die;*/
             "Magento_Ui/js/core/app": {
                 "components": {
                     "todo_component": {
-                        "component": "Webjump_Todo/js/todo_component"
+                        "component": "Webjump_Todo/js/todo_component",
+                        "totalDefaultTodo": <?= $todoVm->getTotalDefaultTodo() ?>,
+                        "optionsPagination": <?= json_encode($todoVm->getOptionTodos()) ?>
                     }
                 }
             }

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="webjump" translate="label" sortOrder="10">
+            <label>Webjump</label>
+        </tab>
+        <section id="todo_list" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Todo List</label>
+            <tab>webjump</tab>
+            <resource>Webjump_Todo::todolist_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Configuration</label>
+                <field id="total_todos" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Todo per page</label>
+                    <source_model>Webjump\Todo\Model\Config\Source\TotalDefautlTodos</source_model>
+                    <comment>Set default total todos listing in page. Example: 10</comment>
+                </field>
+                <field id="total_options" translate="label" type="multiselect" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Options todos per page</label>
+                    <source_model>Webjump\Todo\Model\Config\Source\TotalTodoOptions</source_model>
+                    <comment>Set options total todos listing in page</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

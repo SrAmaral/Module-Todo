@@ -3,4 +3,5 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Webjump\Todo\Api\TodoRepositoryInterface" type="Webjump\Todo\Model\TodoRepository"/>
     <preference for="Webjump\Todo\Api\Data\TodoInterface" type="Webjump\Todo\Model\Todo"/>
+    <preference for="Webjump\Todo\Api\TodoConfigProviderInterface" type="Webjump\Todo\Model\Config\TodoConfigProvider"/>
 </config>

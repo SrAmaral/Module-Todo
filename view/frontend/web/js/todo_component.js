@@ -20,8 +20,8 @@ define([
             todoListLike: ko.observableArray([]), //Lista de backup da todoList para comparar alterações de textos a ser salvo
             todoPagination: ko.observableArray([]), //Lista que contem todas as paginações que seram exibidas
             newTodoText: ko.observable(''), //Estado que contem o tetxto da nova todo a ser criada
-            totalOptionsTodos: ko.observableArray([1,5,10,20,30,50]), //Lista de todas opções de quantidades de todos listadas por página
-            totalTodoShow: ko.observable(10), //Estado que armazena inicialmente a quantidade de todos listados na pagina
+            totalOptionsTodos: ko.observableArray(), //Lista de todas opções de quantidades de todos listadas por página
+            totalTodoShow: ko.observable(), //Estado que armazena inicialmente a quantidade de todos listados na pagina
             currentPages: ko.observable(0) //Estado que armazena a paginação atual
 
 
@@ -34,6 +34,9 @@ define([
 
             self.handleTodoListUpdate() // Inicia carreagando todos os todos com uma requisição
 
+            self.totalTodoShow(self.totalDefaultTodo)
+
+            self.totalOptionsTodos(self.optionsPagination)
 
             // Corta o array de todoList para listar apenas os todos relacionados a paginação atual
             this.todoListResultPagination = ko.computed(function () {
