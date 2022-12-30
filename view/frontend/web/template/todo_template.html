@@ -1,6 +1,10 @@
+<!-- Lista todos todos da paginação atual -->
 <!-- ko foreach: todoListResultPagination -->
     <div class="todo_element">
+        <!-- Renderiza o checkbox passando o estado de checked e a função de update do mesmo -->
         <input class="todo_is_done" type="checkbox" data-bind="checked: is_done, click: $parent.handleTodoIsCheckUpdate" />
+
+        <!-- Valida se o todo esta em modo edição ou nao -->
         <!-- ko if: isEdit() -->
             <input class="todo_title_edit" type="text" data-bind="textInput: title" />
         <!-- /ko -->
@@ -8,9 +12,12 @@
          <span class="todo_title" data-bind="text: title, click: $parent.handleTodoIsCheckUpdate"></span>
         <!-- /ko -->
 
+        <!-- Deleta o todo passando a função de delete -->
         <a href="/" class="remove_btn" data-bind="click: $parent.deleteTodo">
 
         </a>
+
+        <!-- Renderiza o icone de edição e save alterando entre eles baseado no estado de edição e passa a função de handleEdit -->
         <a href="/" class="edit_btn" data-bind="click: $parent.handleTodoEdit.bind(this, $index())">
             <span  class="label_btn" data-bind="css: {edit_icon: !isEdit(), save_icon: isEdit()}"></span>
         </a>
@@ -18,15 +25,16 @@
 <!--/ko-->
 
 <div class="pagination">
-
         <div class="previous_page" data-bind="click: nextPage" ></div>
             <div class="paginations_numbers">
+                <!-- Renderiza todas as Paginações basiado na validação de paginationRender e adiciona a classe desabiltado com a função disablePagination -->
                 <!-- ko foreach: paginatitonRender -->
                         <a class="action primary" data-bind="text: $data, click: $parent.handlePagination, css: {disabled_pagination: $parent.disablePagination($data -1)}"></a>
                 <!--/ko-->
             </div>
         <div class="next_page" data-bind="click: previousPage"></div>
 
+    <!-- Altera o valor do numero de todos por paginação -->
     <select class="select_per_page" data-bind="options: totalOptionsTodos, value: totalTodoShow"></select>
 </div>
 
@@ -34,6 +42,7 @@
 <div class="todo_add">
     <label class="add_label" for="addTodo">Add Todo</label>
     <div class="add_group">
+        <!-- Cria uma nova todo -->
         <input class="add_input" id="addTodo" type="text" data-bind="textInput: newTodoText" placeholder="Adicionar Todo" />
         <button class="action primary add_button" data-bind="click: addTodo">
             <span>Criar</span>
