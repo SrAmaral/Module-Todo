@@ -17,8 +17,10 @@ define([
         defaults: {
             template: 'Webjump_Todo/todo_template',
             todoList: ko.observableArray([]),
+            todoListLike: ko.observableArray([]),
             todoPagination: ko.observableArray([]),
             newTodoText: ko.observable(''),
+            totalOptionsTodos: ko.observableArray([1,5,10,20,30,50]),
             totalTodoShow: ko.observable(10),
             currentPages: ko.observable(0)
 
@@ -36,6 +38,23 @@ define([
                 let totalTodos = self.currentPages()*self.totalTodoShow()
                 return self.todoList().slice(totalTodos, totalTodos + self.totalTodoShow())
             }, this)
+
+            this.paginatitonRender = ko.computed(function () {
+                if(self.currentPages() === 0){
+                    return self.todoPagination.slice(0, 3)
+                }
+                if(self.currentPages() + 1 === self.todoPagination().length && self.todoPagination().length > 0) {
+                    if(self.todoPagination().length === 2) {
+                        return self.todoPagination.slice(self.todoPagination().length - 2, self.todoPagination().length)
+                    }
+                    return self.todoPagination.slice(self.todoPagination().length - 3, self.todoPagination().length)
+                }
+                return self.todoPagination.slice(self.currentPages() - 1, self.currentPages() + 2)
+            }, this)
+            self.totalTodoShow.subscribe(() => {
+                self.handleTodoListUpdate()
+                self.currentPages(0)
+            })
         },
 
         handleTodoListUpdate: function (){
@@ -43,14 +62,19 @@ define([
             storage.get('rest/V1/todos').done(response => {
                 self.todoList.removeAll()
                 let todoArray = []
+                let todoArrayLike = []
+                let paginationArray = []
                 response.map(todo => {
                     todoArray.push({...todo, isEdit: ko.observable(false)})
+                    todoArrayLike.push({...todo, isEdit: ko.observable(false)})
                 })
                 self.todoList(todoArray)
+                self.todoListLike(todoArrayLike)
                 self.todoPagination.removeAll()
                 for (let i = 0; i < response.length/self.totalTodoShow(); i++) {
-                    self.todoPagination.push(i+1)
+                    paginationArray.push(i+1)
                 }
+                self.todoPagination(paginationArray)
 
             }).always(() => {
                 $('.todo_component').trigger('processStop')
@@ -59,7 +83,7 @@ define([
 
 
         addTodo: function (){
-            if( self.newTodoText().replaceAll(' ', '') != "")
+            if( self.newTodoText().replaceAll(' ', '') !== "")
             {
                 storage.post('rest/V1/todo',
                     JSON.stringify({
@@ -105,8 +129,15 @@ define([
         },
 
         handleTodoEdit: function (index,todo, event){
+
+            let todosEdits = self.todoList.filter((item, index) => item.isEdit() && self.todoListLike()[index].title !== item.title)
+
+            console.log(todosEdits)
+
             if(todo.isEdit()){
-                self.handleTodoIsCheckUpdate(todo, event, true)
+                todosEdits.map((item, index) => {
+                    self.handleTodoIsCheckUpdate(item, event, true)
+                })
             }
 
             self.todoList()[index].isEdit(!self.todoList()[index].isEdit())
@@ -133,8 +164,6 @@ define([
                 self.handleTodoListUpdate()
                 self.currentPages(self.currentPages() +1)
             }
-        }
-
-
+        },
     });
 });

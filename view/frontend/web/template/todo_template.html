@@ -18,12 +18,19 @@
 <!--/ko-->
 
 <div class="pagination">
-    <div class="previous_page" data-bind="click: nextPage" ></div>
-    <!-- ko foreach: todoPagination -->
-        <a class="action primary" data-bind="text: $data, click: $parent.handlePagination, css: {disabled_pagination: $parent.disablePagination($index())}"></a>
-    <!--/ko-->
-    <div class="next_page" data-bind="click: previousPage"></div>
+
+        <div class="previous_page" data-bind="click: nextPage" ></div>
+            <div class="paginations_numbers">
+                <!-- ko foreach: paginatitonRender -->
+                        <a class="action primary" data-bind="text: $data, click: $parent.handlePagination, css: {disabled_pagination: $parent.disablePagination($data -1)}"></a>
+                <!--/ko-->
+            </div>
+        <div class="next_page" data-bind="click: previousPage"></div>
+
+    <select class="select_per_page" data-bind="options: totalOptionsTodos, value: totalTodoShow"></select>
 </div>
+
+</select>
 <div class="todo_add">
     <label class="add_label" for="addTodo">Add Todo</label>
     <div class="add_group">
